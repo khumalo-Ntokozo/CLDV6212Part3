@@ -1,0 +1,31 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.12.35707.178
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ABCRetailers", "ABCRetailers.csproj", "{C12B9756-433B-470E-AF96-A22C7FE0A1CF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ABCRetailers.Functions", "..\ABCRetailers.Functions\ABCRetailers.Functions.csproj", "{6C21C854-7490-4442-BCD1-FC7D32A92E49}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{C12B9756-433B-470E-AF96-A22C7FE0A1CF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C12B9756-433B-470E-AF96-A22C7FE0A1CF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C12B9756-433B-470E-AF96-A22C7FE0A1CF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C12B9756-433B-470E-AF96-A22C7FE0A1CF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6C21C854-7490-4442-BCD1-FC7D32A92E49}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6C21C854-7490-4442-BCD1-FC7D32A92E49}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6C21C854-7490-4442-BCD1-FC7D32A92E49}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6C21C854-7490-4442-BCD1-FC7D32A92E49}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {42E4510F-5B40-47B3-91D3-1C40EAD60E77}
+	EndGlobalSection
+EndGlobal

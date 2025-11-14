@@ -1,0 +1,73 @@
+﻿@model ABCRetailers.ViewModels.RegisterViewModel
+
+@{
+    ViewData["Title"] = "Register";
+}
+
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-header">
+                <h3 class="text-center">Create Account</h3>
+            </div>
+            <div class="card-body">
+                <!-- Show all validation errors -->
+                <div asp-validation-summary="All" class="alert alert-danger"></div>
+
+                <form asp-action="Register" method="post">
+                    <div class="form-group mb-3">
+                        <label asp-for="Username" class="form-label"></label>
+                        <input asp-for="Username" class="form-control" />
+                        <span asp-validation-for="Username" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group mb-3">
+                        <label asp-for="Email" class="form-label"></label>
+                        <input asp-for="Email" class="form-control" />
+                        <span asp-validation-for="Email" class="text-danger"></span>
+                    </div>
+
+                    <!-- ✅ ADDED ROLE SELECTION -->
+                    <div class="form-group mb-3">
+                        <label asp-for="Role" class="form-label">Account Type</label>
+                        <select asp-for="Role" class="form-control">
+                            <option value="">-- Select Account Type --</option>
+                            <option value="Customer">Customer Account</option>
+                            <option value="Admin">Admin Account</option>
+                        </select>
+                        <span asp-validation-for="Role" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group mb-3">
+                        <label asp-for="Password" class="form-label"></label>
+                        <input asp-for="Password" type="password" class="form-control" />
+                        <span asp-validation-for="Password" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group mb-3">
+                        <label asp-for="ConfirmPassword" class="form-label"></label>
+                        <input asp-for="ConfirmPassword" type="password" class="form-control" />
+                        <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-success w-100">Register</button>
+                    </div>
+
+                    <div class="text-center mt-3">
+                        <p>Already have an account? <a asp-action="Login">Login here</a></p>
+                    </div>
+
+                    <!-- Account Type Information -->
+                    <div class="mt-4 p-3 bg-light rounded">
+                        <h6>About Account Types:</h6>
+                        <small class="text-muted">
+                            <strong>Customer Account:</strong> Can browse products, add to cart, and place orders.<br>
+                            <strong>Admin Account:</strong> Can manage products, customers, and orders.
+                        </small>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

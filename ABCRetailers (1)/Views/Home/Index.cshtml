@@ -1,0 +1,280 @@
+﻿@model ABCRetailers.Models.ViewModels.HomeViewModel
+@{
+    ViewData["Title"] = "Home";
+    var userRole = Context.Session.GetString("Role");
+    var isAdmin = userRole == "Admin";
+    var isCustomer = userRole == "Customer";
+    var isLoggedIn = !string.IsNullOrEmpty(Context.Session.GetString("Username"));
+}
+
+<div class="text-center bg-gradient p-5 mb-4 rounded-3 shadow-sm">
+    <h1 class="display-4 fw-bold text-primary">
+        <i class="fas fa-bolt text-warning"></i> Welcome to <span class="text-dark">ABC Retailers!</span>
+    </h1>
+    <p class="lead text-muted">
+        Shop smarter, live better — your journey starts here.
+    </p>
+
+    @if (isLoggedIn)
+    {
+        <div class="alert alert-info mt-3">
+            <h5>
+                Welcome back, @Context.Session.GetString("Username")!
+                <span class="badge @(isAdmin ? "bg-warning text-dark" : "bg-info")">
+                    @userRole
+                </span>
+            </h5>
+            @if (isAdmin)
+            {
+                <p class="mb-0">You have access to manage customers, products, and orders.</p>
+            }
+            else
+            {
+                <p class="mb-0">Browse our products and start shopping!</p>
+            }
+        </div>
+    }
+</div>
+
+@if (isLoggedIn)
+{
+    <!-- Action Buttons for Logged-in Users -->
+    <div class="row mb-5">
+        @if (isAdmin)
+        {
+            <!-- Admin Dashboard Buttons -->
+            <div class="col-md-3 mb-3">
+                <a asp-controller="Customer" asp-action="Index" class="btn btn-primary btn-lg w-100 h-100 d-flex flex-column justify-content-center">
+                    <i class="fas fa-users fa-2x mb-2"></i>
+                    <span>Manage Customers</span>
+                    <small class="text-light">(@Model.CustomerCount total)</small>
+                </a>
+            </div>
+            <div class="col-md-3 mb-3">
+                <a asp-controller="Product" asp-action="Index" class="btn btn-success btn-lg w-100 h-100 d-flex flex-column justify-content-center">
+                    <i class="fas fa-box fa-2x mb-2"></i>
+                    <span>Manage Products</span>
+                    <small class="text-light">(@Model.ProductCount total)</small>
+                </a>
+            </div>
+            <div class="col-md-3 mb-3">
+                <a asp-controller="Order" asp-action="Index" class="btn btn-warning btn-lg w-100 h-100 d-flex flex-column justify-content-center">
+                    <i class="fas fa-shopping-cart fa-2x mb-2"></i>
+                    <span>Manage Orders</span>
+                    <small class="text-light">(@Model.OrderCount total)</small>
+                </a>
+            </div>
+            <div class="col-md-3 mb-3">
+                <a asp-controller="Home" asp-action="AdminDashboard" class="btn btn-info btn-lg w-100 h-100 d-flex flex-column justify-content-center">
+                    <i class="fas fa-tachometer-alt fa-2x mb-2"></i>
+                    <span>Admin Dashboard</span>
+                </a>
+            </div>
+        }
+        else if (isCustomer)
+        {
+            <!-- Customer Dashboard Buttons -->
+            <div class="col-md-4 mb-3">
+                <a asp-controller="Product" asp-action="Index" class="btn btn-success btn-lg w-100 h-100 d-flex flex-column justify-content-center">
+                    <i class="fas fa-box fa-2x mb-2"></i>
+                    <span>Browse Products</span>
+                    <small class="text-light">(@Model.ProductCount available)</small>
+                </a>
+            </div>
+            <div class="col-md-4 mb-3">
+                <a asp-controller="Cart" asp-action="Index" class="btn btn-warning btn-lg w-100 h-100 d-flex flex-column justify-content-center">
+                    <i class="fas fa-shopping-cart fa-2x mb-2"></i>
+                    <span>My Cart</span>
+                    <small class="text-light">View items</small>
+                </a>
+            </div>
+            <div class="col-md-4 mb-3">
+                <a asp-controller="Order" asp-action="MyOrders" class="btn btn-primary btn-lg w-100 h-100 d-flex flex-column justify-content-center">
+                    <i class="fas fa-list fa-2x mb-2"></i>
+                    <span>My Orders</span>
+                    <small class="text-light">Order history</small>
+                </a>
+            </div>
+        }
+
+        <!-- Common Buttons for All Logged-in Users -->
+        <div class="col-md-3 mb-3">
+            <a asp-controller="Upload" asp-action="Index" class="btn btn-info btn-lg w-100 h-100 d-flex flex-column justify-content-center">
+                <i class="fas fa-upload fa-2x mb-2"></i>
+                <span>Upload Files</span>
+                <small class="text-light">(Payment proofs)</small>
+            </a>
+        </div>
+        <div class="col-md-3 mb-3">
+            <a asp-controller="Home" asp-action="Privacy" class="btn btn-dark btn-lg w-100 h-100 d-flex flex-column justify-content-center">
+                <i class="fas fa-shield-alt fa-2x mb-2"></i>
+                <span>Privacy Policy</span>
+            </a>
+        </div>
+    </div>
+}
+else
+{
+    <!-- Guest User Welcome -->
+    <div class="row mb-5">
+        <div class="col-md-6 mb-3">
+            <div class="card text-center h-100">
+                <div class="card-body">
+                    <i class="fas fa-user-plus fa-3x text-primary mb-3"></i>
+                    <h5 class="card-title">New Customer?</h5>
+                    <p class="card-text">Create an account to start shopping and access exclusive features.</p>
+                    <a asp-controller="Login" asp-action="Register" class="btn btn-success btn-lg">
+                        <i class="fas fa-user-plus"></i> Register Now
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 mb-3">
+            <div class="card text-center h-100">
+                <div class="card-body">
+                    <i class="fas fa-sign-in-alt fa-3x text-warning mb-3"></i>
+                    <h5 class="card-title">Returning Customer?</h5>
+                    <p class="card-text">Login to your account to manage your orders and shopping cart.</p>
+                    <a asp-controller="Login" asp-action="Login" class="btn btn-primary btn-lg">
+                        <i class="fas fa-sign-in-alt"></i> Login
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+<!-- Storage Initialization (if needed) -->
+@if (Model.CustomerCount == 0 && Model.ProductCount == 0 && Model.OrderCount == 0)
+{
+    <div class="alert alert-warning">
+        <h5><i class="fas fa-exclamation-triangle"></i> First Time Setup</h5>
+        <p>It looks like this is your first time running the application. Click the button below to initialize Azure Storage.</p>
+        <form asp-action="InitializeStorage" method="post" style="display: inline;">
+            <button type="submit" class="btn btn-warning">
+                <i class="fas fa-cog"></i> Initialize Azure Storage
+            </button>
+        </form>
+    </div>
+}
+
+<!-- Featured Products Section -->
+@if (isCustomer || !isLoggedIn)
+{
+    <div class="row">
+        <div class="col-12">
+            <h2 class="mb-4">
+                <i class="fas fa-star text-warning"></i> Featured Products
+            </h2>
+
+            @if (Model.FeaturedProducts.Any())
+            {
+                <div class="row justify-content-center">
+                    @foreach (var product in Model.FeaturedProducts)
+                    {
+                        <div class="col-lg-2 col-md-3 col-sm-4 col-6 mb-4">
+                            <div class="card h-100 shadow-sm">
+                                @if (!string.IsNullOrEmpty(product.ImageUrl))
+                                {
+                                    <img src="@product.ImageUrl" class="card-img-top" alt="@product.ProductName" style="height: 150px; object-fit: cover;">
+                                }
+                                else
+                                {
+                                    <div class="card-img-top bg-light d-flex align-items-center justify-content-center" style="height: 150px;">
+                                        <i class="fas fa-image fa-3x text-muted"></i>
+                                    </div>
+                                }
+                                <div class="card-body d-flex flex-column">
+                                    <h6 class="card-title text-center">@product.ProductName</h6>
+                                    <p class="card-text small text-muted flex-grow-1 text-center">@(product.Description.Length > 50 ? product.Description.Substring(0, 50) + "..." : product.Description)</p>
+                                    <div class="mt-auto text-center">
+                                        <p class="card-text">
+                                            <strong class="text-success">R@(product.Price.ToString("N2"))</strong>
+                                        </p>
+                                        <small class="text-muted">Stock: @product.StockAvailable</small>
+                                    </div>
+                                </div>
+                                @if (isCustomer)
+                                {
+                                    <div class="card-footer">
+                                        <form asp-action="AddToCart" asp-controller="Cart" method="post" class="d-inline w-100">
+                                            <input type="hidden" name="productId" value="@product.RowKey" />
+                                            <div class="input-group input-group-sm">
+                                                <input type="number" name="quantity" value="1" min="1" max="@product.StockAvailable" class="form-control" style="width: 60px;">
+                                                <button type="submit" class="btn btn-success btn-sm" @(product.StockAvailable == 0 ? "disabled" : "")>
+                                                    <i class="fas fa-cart-plus"></i>
+                                                </button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                }
+                                else if (!isLoggedIn)
+                                {
+                                    <div class="card-footer">
+                                        <a href="@Url.Action("Login", "Login")" class="btn btn-outline-primary btn-sm w-100">
+                                            <i class="fas fa-sign-in-alt"></i> Login to Buy
+                                        </a>
+                                    </div>
+                                }
+                            </div>
+                        </div>
+                    }
+                </div>
+            }
+            else
+            {
+                <div class="alert alert-info">
+                    <i class="fas fa-info-circle"></i> No products available yet.
+                    @if (isAdmin)
+                    {
+                        <a asp-controller="Product" asp-action="Create" class="alert-link">Add your first product</a>
+                    }
+                    else
+                    {
+                        <span>Please check back later.</span>
+                    }
+                </div>
+            }
+        </div>
+    </div>
+}
+else if (isAdmin)
+{
+    <!-- Admin Quick Stats -->
+    <div class="row">
+        <div class="col-12">
+            <h2 class="mb-4">
+                <i class="fas fa-chart-bar text-primary"></i> Quick Stats
+            </h2>
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="card text-white bg-primary">
+                        <div class="card-body text-center">
+                            <i class="fas fa-users fa-2x mb-2"></i>
+                            <h3>@Model.CustomerCount</h3>
+                            <p class="mb-0">Total Customers</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card text-white bg-success">
+                        <div class="card-body text-center">
+                            <i class="fas fa-box fa-2x mb-2"></i>
+                            <h3>@Model.ProductCount</h3>
+                            <p class="mb-0">Total Products</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="card text-white bg-warning">
+                        <div class="card-body text-center">
+                            <i class="fas fa-shopping-cart fa-2x mb-2"></i>
+                            <h3>@Model.OrderCount</h3>
+                            <p class="mb-0">Total Orders</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
